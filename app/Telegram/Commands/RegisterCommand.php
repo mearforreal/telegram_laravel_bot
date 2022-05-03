@@ -55,11 +55,6 @@ class RegisterCommand extends Command
             'reply_markup' => $keyboard
         ]);
 
-        $data = $response->all();
-        // get response
-        $telegram_phone = TelegramContact::where('chat_id','=',$data['chat']['id'])
-            ->where('replied',false)->orderBy('created_at', 'DESC')->first();
-        Log::debug($telegram_phone);
 
 
 //        $telegram_phone->replied = true;

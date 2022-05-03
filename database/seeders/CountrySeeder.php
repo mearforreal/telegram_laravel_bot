@@ -15,7 +15,7 @@ class CountrySeeder extends Seeder
      */
     public function run()
     {
-        Country::truncate();
+        //Country::truncate();
         $manufacturer = array('Китай','Германия','Япония','Корея','Франция','Россия','Англия');
         //
         foreach ($manufacturer as $manu){
