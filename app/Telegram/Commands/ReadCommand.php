@@ -39,12 +39,13 @@ class ReadCommand extends Command
         $format = "<b>Информация профиля</b>"."\n\n".
             "<b>Номер телефона:</b> <i>%s</i>"."\n".
             "<b>Город:</b> <i>%s</i>"."\n".
+            "<b>Имя и фамилия:</b> <i>%s</i>"."\n".
             "<b>Никнейм:</b> <i>%s</i>"."\n".
             "<b>Дата рождения:</b> <i>%s</i>";
 
         $text = '<b>Регистрация не завершена</b>, используйте /edit для обновления профиля';
         if(isset($profile->city) and $profile->phone_number and $profile->nickname and $profile->dob){
-            $text = sprintf($format, $profile->phone_number, $profile->city->title,$profile->nickname,$profile->dob);
+            $text = sprintf($format, $profile->phone_number, $profile->city->title,$profile->full_name,$profile->nickname,$profile->dob);
         }
         $this->replyWithMessage([
             'parse_mode'=>'html',
