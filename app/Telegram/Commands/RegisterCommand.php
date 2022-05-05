@@ -43,7 +43,8 @@ class RegisterCommand extends Command
 
         $profile = Profile::firstOrNew(['chat_id' =>  $chat_id]);
 
-        if (isset($profile->id)){
+        if (isset($profile->id) && isset($profile->phone_number) && isset($profile->full_name) && isset($profile->dob) && isset($profile->city_id)
+        ){
             $this->replyWithMessage([
                 'parse_mode'=>'html',
                 'text' => '<b>Вы уже зарегистрированы</b>',
