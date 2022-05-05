@@ -40,10 +40,7 @@ class RegisterCommand extends Command
     {
         $chat_id = $this->getUpdate()['message']['chat']['id'];
 
-        $this->replyWithMessage([
-            'parse_mode'=>'html',
-            'text' => '<b>Регистрация профиля</b>',
-        ]);
+
         $profile = Profile::firstOrNew(['chat_id' =>  $chat_id]);
 
         if (isset($profile->id)){
@@ -51,10 +48,14 @@ class RegisterCommand extends Command
                 'parse_mode'=>'html',
                 'text' => '<b>Вы уже зарегистрированы</b>',
             ]);
-            $this->triggerCommand('read');
+            //$this->triggerCommand('read');
             return;
         }
             // request telephone
+            $this->replyWithMessage([
+                'parse_mode'=>'html',
+                'text' => '<b>Регистрация профиля</b>',
+            ]);
             $btn = Keyboard::button([
                 'text' => 'Мой номер',
                 'request_contact' => true

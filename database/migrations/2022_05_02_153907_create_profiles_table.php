@@ -15,10 +15,10 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('phone_number');
-            $table->string('full_name');
-            $table->string('nickname');
-            $table->date('dob');
+            $table->string('phone_number')->nullable();
+            $table->string('full_name')->nullable();;
+            $table->string('nickname')->nullable();;
+            $table->date('dob')->nullable();;
             $table->timestamps();
         });
     }

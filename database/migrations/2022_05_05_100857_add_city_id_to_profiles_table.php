@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCountryFkToProfliesTable extends Migration
+class AddCityIdToProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddCountryFkToProfliesTable extends Migration
     public function up()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->foreignId('country_id')->references('id')->on('countries');
+            $table->foreignId('city_id')->nullable()->references('id')->on('cities');
         });
     }
 
@@ -25,8 +25,8 @@ class AddCountryFkToProfliesTable extends Migration
      */
     public function down()
     {
-        Schema::table('proflies', function (Blueprint $table) {
-            //
+        Schema::table('profiles', function (Blueprint $table) {
+            $table->dropColumn('city_id');
         });
     }
 }

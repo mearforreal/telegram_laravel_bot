@@ -34,7 +34,7 @@ class ReadCommand extends Command
     {
         $chat_id = $this->getUpdate()['message']['chat']['id'];
 
-        $profile = Profile::where('chat_id','=',$chat_id)->with('country')->first();
+        $profile = Profile::where('chat_id','=',$chat_id)->with('city')->first();
 
         $format = "<b>Информация профиля</b>"."\n\n".
             "<b>Номер телефона:</b> <i>%s</i>"."\n".
@@ -42,8 +42,10 @@ class ReadCommand extends Command
             "<b>Никнейм:</b> <i>%s</i>"."\n".
             "<b>Дата рождения:</b> <i>%s</i>";
 
-        $text = sprintf($format, $profile->phone_number, $profile->country->title,$profile->nickname,$profile->dob);
-
+        $text = '<b>Регистрация не завершена</b>, используйте /edit для обновления профиля';
+        if(isset($profile->city) and $profile->phone_number and $profile->nickname and $profile->dob){
+            $text = sprintf($format, $profile->phone_number, $profile->city->title,$profile->nickname,$profile->dob);
+        }
         $this->replyWithMessage([
             'parse_mode'=>'html',
             'text' => $text,

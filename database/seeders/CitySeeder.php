@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
 use App\Models\Country;
 use App\Models\Manufacturer;
 use Illuminate\Database\Seeder;
 
-class CountrySeeder extends Seeder
+class CitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,10 +17,10 @@ class CountrySeeder extends Seeder
     public function run()
     {
         //Country::truncate();
-        $manufacturer = array('Китай','Германия','Япония','Корея','Франция','Россия','Англия');
+        $manufacturer = array('Алматы','Актау','Шымкент','Тараз','Нурсултан','Орал');
         //
         foreach ($manufacturer as $manu){
-            Country::create([
+            City::create([
                 'title' => $manu,
             ]);
         }
