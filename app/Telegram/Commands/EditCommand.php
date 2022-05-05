@@ -3,34 +3,29 @@
 namespace App\Telegram\Commands;
 
 use App\Models\Profile;
-use App\Models\TelegramChat;
-use App\Models\TelegramContact;
-use Illuminate\Support\Facades\Log;
-use Symfony\Component\ErrorHandler\Debug;
 use Telegram\Bot\Commands\Command;
-//use Telegram;
+use Telegram;
 use Telegram\Bot\Keyboard\Keyboard;
-
 
 /**
  * Class HelpCommand.
  */
-class RegisterCommand extends Command
+class EditCommand extends Command
 {
     /**
      * @var string Command Name
      */
-    protected $name = 'register';
+    protected $name = 'edit';
 
     /**
      * @var array Command Aliases
      */
-    protected $aliases = ['registercommands'];
+    protected $aliases = ['editcommands'];
 
     /**
      * @var string Command Description
      */
-    protected $description = 'Регистрация профиля';
+    protected $description = 'Редактирование профиля';
 
     /**
      * {@inheritdoc}
@@ -39,20 +34,15 @@ class RegisterCommand extends Command
 
     {
         $chat_id = $this->getUpdate()['message']['chat']['id'];
+        $profile = Profile::where('chat_id','=',$chat_id)->first();
 
-        $this->replyWithMessage([
-            'parse_mode'=>'html',
-            'text' => '<b>Регистрация профиля</b>',
-        ]);
-        $profile = Profile::firstOrNew(['chat_id' =>  $chat_id]);
-
-        if (isset($profile->id)){
+        if ($profile === null){
             $this->replyWithMessage([
                 'parse_mode'=>'html',
-                'text' => '<b>Вы уже зарегистрированы</b>',
+                'text' => '<b>Вы не зарегистрированы, пожалуйста, зарегистрируйтесь!!! </b>'."\n".'/register',
             ]);
-            $this->triggerCommand('read');
             return;
+//            $this->triggerCommand('read');
         }
             // request telephone
             $btn = Keyboard::button([
@@ -68,9 +58,9 @@ class RegisterCommand extends Command
                 'text' => 'Укажите номер телефона',
                 'reply_markup' => $keyboard
             ]);
+        }
 
 
-        $profile->save();
 
-    }
+
 }

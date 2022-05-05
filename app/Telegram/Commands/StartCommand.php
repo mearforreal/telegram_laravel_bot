@@ -26,7 +26,7 @@ class StartCommand extends Command
     /**
      * @var string Command Description
      */
-    protected $description = 'Start command, Get a list of all actions';
+    protected $description = 'Начать';
 
     /**
      * {@inheritdoc}
@@ -35,37 +35,30 @@ class StartCommand extends Command
 
     {
 
+
 //        $keyboard = Keyboard::make()
-//            ->inline()
 //            ->row(
-//                Keyboard::inlineButton(['text' => 'Регистрация профиля', 'callback_data' => 'data1']),
+//                Keyboard::button(['text' => '/register']),
 //            )->row(
-//                Keyboard::inlineButton(['text' => 'Просмотр профиля', 'callback_data' => 'data2']),
+//                Keyboard::button(['text' => '/read']),
 //            )->row(
-//                Keyboard::inlineButton(['text' => 'Редактирование профиля', 'callback_data' => 'data3']),
+//                Keyboard::button(['text' => '/edit']),
 //            );
 
-        $keyboard = Keyboard::make()
-            ->row(
-                Keyboard::button(['text' => '/register', 'callback_data' => 'data1']),
-            )->row(
-                Keyboard::button(['text' => '/read', 'callback_data' => 'data2']),
-            )->row(
-                Keyboard::button(['text' => '/edit', 'callback_data' => 'data3']),
-            );
+        $commands = $this->getTelegram()->getCommands();
+
+        $response = '';
+        foreach ($commands as $name => $command) {
+            $response .= sprintf('/%s - %s' . PHP_EOL, $name, $command->getDescription());
+        }
+
+        $text = "<b>Команды:</b>"."\n".$response;
 
 
-        $response = $this->replyWithMessage([
-            'text' => 'What do you want to do?',
-            'reply_markup' => $keyboard
+        $this->replyWithMessage([
+            'text' => $text,
+            'parse_mode'=>'html'
         ]);
-
-        $messageId = $response->getMessageId();
-        Log::debug($messageId);
-        Log::debug($this->getUpdate());
-
-        //$update = $this->getUpdate();
-
 
     }
 }
