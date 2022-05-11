@@ -13,7 +13,7 @@ class ChangeChatToLongIntProfilesTable extends Migration
      */
     public function up()
     {
-        Schema::table('long_int_profiles', function (Blueprint $table) {
+        Schema::table('profiles', function (Blueprint $table) {
             $table->bigInteger('chat_id')->change();
         });
     }
